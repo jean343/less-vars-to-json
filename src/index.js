@@ -1,4 +1,12 @@
 const varRgx = /^@/;
+const followVar = ( value, lessVars, constants ) => {
+	if( varRgx.test( value ) ){
+		// value is a variable
+		return followVar( lessVars[value] || constants[value.substring( 1 )] );
+	}
+	return value;
+}
+
 export default ( sheet, constants = {} ) => {
 	sheet = sheet.replace( /\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/gm, '' ) // Replace comments
 
@@ -10,23 +18,14 @@ export default ( sheet, constants = {} ) => {
 		lessVars[definition[0].replace( /['"]+/g, '' ).trim()] = definition.splice( 1 ).join( ':' );
 	} );
 
-	const keys = Object.keys( lessVars );
-
-	const followVar = value => {
-		if( varRgx.test( value ) ){
-			// value is a variable
-			return followVar( lessVars[value] || constants[value.substring( 1 )] );
-		}
-		return value;
-	}
-	Object.keys( lessVars ).map( key => {
+	Object.keys( lessVars ).forEach( key => {
 		const value = lessVars[key];
-		lessVars[key] = followVar( value );
+		lessVars[key] = followVar( value, lessVars, constants );
 	} );
 
 	const transformKey = key => key.replace( varRgx, '' );
 
-	return keys.reduce( ( prev, key ) => {
+	return Object.keys( lessVars ).reduce( ( prev, key ) => {
 		prev[transformKey( key )] = lessVars[key];
 		return prev;
 	}, {} );
