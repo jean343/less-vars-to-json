@@ -1,6 +1,6 @@
 const varRgx = /^@/;
-module.exports = sheet => {
-	sheet = sheet.replace( /\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/gm, '' ) // Replace // comments
+module.exports = ( sheet, constants = {} ) => {
+	sheet = sheet.replace( /\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/gm, '' ) // Replace comments
 
 	const lessVars = {};
 	const matches = sheet.match( /@(.*:[^;]*)/g ) || [];
@@ -15,7 +15,7 @@ module.exports = sheet => {
 	const followVar = value => {
 		if( varRgx.test( value ) ){
 			// value is a variable
-			return followVar( lessVars[value] );
+			return followVar( lessVars[value] || constants[value.substring( 1 )] );
 		}
 		return value;
 	}
