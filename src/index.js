@@ -1,5 +1,5 @@
 const varRgx = /^@/;
-module.exports = ( sheet, constants = {} ) => {
+export default ( sheet, constants = {} ) => {
 	sheet = sheet.replace( /\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/gm, '' ) // Replace comments
 
 	const lessVars = {};
