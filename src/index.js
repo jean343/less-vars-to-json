@@ -9,7 +9,6 @@ module.exports = sheet => {
 		const definition = variable.split( /:\s*/ );
 		lessVars[definition[0].replace( /['"]+/g, '' ).trim()] = definition.splice( 1 ).join( ':' );
 	} );
-	console.log( matches )
 
 	const keys = Object.keys( lessVars );
 
