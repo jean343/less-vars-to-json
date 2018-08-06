@@ -29,9 +29,6 @@ Example :
 // Grid
 @row-height: 9;
 
-// Sass
-$sass-works-too: true;
-
 .element {
     @foreground: black;
     color: @foreground;
