@@ -100,13 +100,19 @@ describe( 'Given the contents of a less file', () => {
 	it( "should trim variable names", () => expect( lessVarsToJS( `
 		@blue : #0d3880;
     ` ) ).to.deep.equal( {
-		'blue': '#0d3880'
+		'blue': '#0d3880',
+	} ) );
+
+	it( "should trim values", () => expect( lessVarsToJS( `
+		@blue :   #0d3880  ;
+    ` ) ).to.deep.equal( {
+		'blue': '#0d3880',
 	} ) );
 
 	it( "should read variables that are url", () => expect( lessVarsToJS( `
 		@icon-url : "https://xxx.com:8080/t/font";
     ` ) ).to.deep.equal( {
-		'icon-url': '"https://xxx.com:8080/t/font"'
+		'icon-url': 'https://xxx.com:8080/t/font'
 	} ) );
 
 	it( "should use default variable values", () => expect( lessVarsToJS( `
@@ -138,5 +144,11 @@ describe( 'Given the contents of a less file', () => {
 		"foreground": "black",
 		"pink": "#e60278",
 		"row-height": "9",
+	} ) );
+
+	it( "should not parse functions", () => expect( lessVarsToJS( `
+		@color : darken(@blue, 20%);
+    `, { blue: "#0000FF" } ) ).to.deep.equal( {
+		color: "darken(@blue, 20%)"
 	} ) );
 } );

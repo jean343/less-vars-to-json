@@ -15,7 +15,9 @@ export default ( sheet, constants = {} ) => {
 
 	matches.forEach( variable => {
 		const definition = variable.split( /:\s*/ );
-		lessVars[definition[0].replace( /['"]+/g, '' ).trim()] = definition.splice( 1 ).join( ':' );
+		let value = definition.splice( 1 ).join( ':' );
+		value = value.trim().replace( /^["'](.*)["']$/, '$1' );
+		lessVars[definition[0].replace( /['"]+/g, '' ).trim()] = value;
 	} );
 
 	Object.keys( lessVars ).forEach( key => {
