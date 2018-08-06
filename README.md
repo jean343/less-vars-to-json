@@ -29,10 +29,17 @@ Example :
 // Grid
 @row-height: 9;
 
+// Sass
+$sass-works-too: true;
+
 .element {
     @foreground: black;
     color: @foreground;
 }
+```
+```sass
+// Sass
+$sass-works-too: #0d3880
 ```
 Example output:
 ```json
@@ -43,6 +50,11 @@ Example output:
     "foreground": "black",
     "pink": "#e60278",
     "row-height": "9"
+}
+```
+```json
+{
+    "sass-works-too": "#0d3880"
 }
 ```
 

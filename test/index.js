@@ -133,6 +133,9 @@ describe( 'Given the contents of a less file', () => {
 		// Grid
 		@row-height: 9;
 		
+		// Sass
+		@sass-works-too: #0d3880;
+		
 		.element {
 			@foreground: black;
 			color: @foreground;
@@ -144,6 +147,7 @@ describe( 'Given the contents of a less file', () => {
 		"foreground": "black",
 		"pink": "#e60278",
 		"row-height": "9",
+		"sass-works-too": "#0d3880",
 	} ) );
 
 	it( "should not parse functions", () => expect( lessVarsToJS( `
