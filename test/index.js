@@ -151,4 +151,13 @@ describe( 'Given the contents of a less file', () => {
     `, { blue: "#0000FF" } ) ).to.deep.equal( {
 		color: "darken(@blue, 20%)"
 	} ) );
+
+	it( "should support sass variables", () => expect( lessVarsToJS( `
+		$font-stack:    Helvetica, sans-serif;
+		$primary-color: #333;
+    `, { blue: "#0000FF" } ) ).to.deep.equal( {
+		"font-stack": "Helvetica, sans-serif",
+		"primary-color": "#333",
+	} ) );
+
 } );

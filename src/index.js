@@ -1,6 +1,6 @@
 import stripComments from 'strip-json-comments';
 
-const varRgx = /^@/;
+const varRgx = /^[@$]/;
 const followVar = ( value, lessVars, constants ) => {
 	if( varRgx.test( value ) ){
 		// value is a variable
@@ -11,7 +11,7 @@ const followVar = ( value, lessVars, constants ) => {
 
 export default ( sheet, constants = {} ) => {
 	const lessVars = {};
-	const matches = stripComments( sheet ).match( /@(.*:[^;]*)/g ) || [];
+	const matches = stripComments( sheet ).match( /[@$](.*:[^;]*)/g ) || [];
 
 	matches.forEach( variable => {
 		const definition = variable.split( /:\s*/ );
